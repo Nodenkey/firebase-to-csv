@@ -10,7 +10,7 @@ import {v4} from "uuid";
 const DashboardList = ({details}) => {
     return (
         details ?
-        details.map((user, index) =>
+        details.sort((a, b) => b.createdAt - a.createdAt).map((user, index) =>
             <DashboardItem key={v4()} name={user.fullName} email={user.email} interests={user.interest} social={user.social} profession={user.profession} num={index + 1}/>
         ) : <h2>Loading...</h2>
     );
