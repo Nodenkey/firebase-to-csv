@@ -186,6 +186,8 @@ button:hover {
 
 #admin form {
   width: 40vw;
+  height: fit-content;
+  margin: auto 0;
 }
 
 a {
@@ -194,7 +196,7 @@ a {
 }
 
 /* Modal */
-#modal {
+#modal, #success-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -207,7 +209,7 @@ a {
   align-items: center;
 }
 
-#modal .modal-main {
+#modal .modal-main, #success-modal .modal-main {
   min-width: 40%;
   max-width: 60%;
   border-radius: 5px;
@@ -257,4 +259,8 @@ a {
   height: 100vh !important;
   width: 100vw !important;
   overflow: hidden !important;
+}
+
+#success-modal .modal-main {
+  text-align: center;
 }

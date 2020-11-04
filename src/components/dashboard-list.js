@@ -10,7 +10,7 @@ import {v4} from "uuid";
 const DashboardList = ({details}) => {
     return (
         details ?
-        details.sort((a, b) => b.createdAt - a.createdAt).map((user, index) =>
+        details.slice().sort((a, b) => b.createdAt.seconds - a.createdAt.seconds).map((user, index) =>
             <DashboardItem key={v4()} name={user.fullName} email={user.email} interests={user.interest} social={user.social} profession={user.profession} num={index + 1}/>
         ) : <h2>Loading...</h2>
     );
@@ -19,7 +19,7 @@ const DashboardList = ({details}) => {
 const mapStateToProps = (state) => {
     // state refers to the general state of the rootReducer
     return {
-        details: state.firebase.ordered.details,
+        details: state.firestore.ordered.details,
     }
 }
 

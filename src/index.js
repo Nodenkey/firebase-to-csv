@@ -8,10 +8,13 @@ import {createStore, applyMiddleware, compose} from 'redux';
 import rootReducer from './redux/reducers/rootReducer';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
-import {createFirestoreInstance ,reduxFirestore, getFirestore} from "redux-firestore";
+import {createFirestoreInstance, reduxFirestore, getFirestore} from "redux-firestore";
 import {ReactReduxFirebaseProvider, getFirebase} from "react-redux-firebase";
 import firebase from 'firebase/app'
 import fbConfig from "./config/fbConfig";
+import {useSelector} from 'react-redux'
+import {isLoaded} from 'react-redux-firebase';
+import Loader from "./components/loader";
 
 
 // use withExtraArgument on thunk to tag the getFirebase and getFirestore to the thunk in the redux actions
@@ -34,14 +37,22 @@ const rrfProps = {
     createFirestoreInstance,
 }
 
+const AuthIsLoaded = ({children}) => {
+    const auth = useSelector(state => state.firebase.auth)
+    if (!isLoaded(auth)) return <Loader/>;
+    return children
+}
+
 ReactDOM.render(
-        <Provider store={store}>
-            <ReactReduxFirebaseProvider {...rrfProps}>
+    <Provider store={store}>
+        <ReactReduxFirebaseProvider {...rrfProps} >
+            <AuthIsLoaded>
                 <Router>
                     <App/>
                 </Router>
-            </ReactReduxFirebaseProvider>
-        </Provider>,
+            </AuthIsLoaded>
+        </ReactReduxFirebaseProvider>
+    </Provider>,
     document.getElementById('root')
 );
 
